@@ -1,12 +1,14 @@
 package moneybook;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class CalendarMethod {
@@ -37,7 +39,7 @@ class CalendarMethod {
 
 		return calArr;
 	}
-
+		
 	public ArrayList<Integer> getlastMonth() {
 		cal.set(Calendar.DATE, 1);
 		startDay_yoil = cal.get(Calendar.DAY_OF_WEEK);
@@ -81,23 +83,39 @@ public class CalendarMain extends JFrame{
 		
 	//	GridLayout gridLayout = new GridLayout(cal.calArr.size()/7,7);
 	//	frame.setLayout(gridLayout);
+	//	frame.getContentPane().setLayout(new FlowLayout());
 		frame.setVisible(true);
-		frame.setSize(800, 800);
+		frame.setSize(640, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
 		panel.setSize(800, 800);
+		frame.setLocationRelativeTo(null);
 		
-		for (int i = 0; i < cal.calArr.size(); i++) {
-			JButton btn = new JButton(Integer.toString(cal.calArr.get(i))+" ");
-			
-			btn.setSize(100, 100);
-
+		for(int i = 0; i<header.length;i++) {
+			JButton btn = new JButton(header[i]);
+			btn.setPreferredSize(new Dimension(75,75));
 			if (i % 7 == 0) {
-				btn.setBackground(Color.RED);
+				btn.setForeground(Color.RED);
 			} else if (i % 7 == 6) {
-				btn.setBackground(Color.RED);
+				btn.setForeground(Color.RED);
 			}
 			panel.add(btn);
+		}
+
+		for (int i = 0; i < cal.calArr.size(); i++) {
+			
+			JButton btn1 = new JButton(Integer.toString(cal.calArr.get(i)));
+			
+			
+			btn1.setPreferredSize(new Dimension(75,75));
+	//		btn.setSize(100, 100);
+
+			if (i % 7 == 0) {
+				btn1.setForeground(Color.RED);
+			} else if (i % 7 == 6) {
+				btn1.setForeground(Color.RED);
+			}
+			panel.add(btn1,BorderLayout.WEST);
 		} 
 	/*	for (int i = 0; i < cal.calArr.size(); i++) {
 			JButton btn = new JButton(Integer.toString(cal.calArr.get(i)));
