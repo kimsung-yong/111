@@ -19,6 +19,14 @@ class CalendarMethod {
 	int lastDay = cal.getActualMaximum(Calendar.DATE); // 해당 달의 마지막날짜
 	int startDay_yoil = cal.get(Calendar.DAY_OF_WEEK); // 해당 일의 요일 기본적으로 현재 날짜의 요일
 
+	public String[] getCalHeader() {
+		return calHeader;
+	}
+
+	public void setCalHeader(String[] calHeader) {
+		this.calHeader = calHeader;
+	}
+
 	public ArrayList<Integer> getThisMonth() {
 		cal.set(Calendar.MONTH, 0);
 		cal.set(Calendar.DATE, 1);
@@ -56,27 +64,51 @@ class CalendarMethod {
 
 }
 
-public class CalendarMain {
+public class CalendarMain extends JFrame{
+	
+	private static final long serialVersionUID = 1L;
+
 	public static void main(String[] args) {
 		CalendarMethod cal = new CalendarMethod();
 		cal.getlastMonth();
 		cal.getThisMonth();
 		cal.conSol();
-		
+		String header[] = cal.getCalHeader();
+		ArrayList<Integer> row = cal.calArr;
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
-		JLabel label;
-		for(int i = 0;i<cal.getlastMonth().size();i++) {
-			label = new JLabel(cal.calArr);
-			label.setSize(80, 80);
-			panel.add(label);
-		}
-		for(int i =0; i<cal.getThisMonth().size();i++) {
-			label = new JLabel(cal.calArr);
-			label.setSize(80, 80);
-			panel.add(label);
-		}
+	//	JTable table = new JTable(header,row);
+		
+		GridLayout gridLayout = new GridLayout(cal.calArr.size()/7,7);
+		frame.setLayout(gridLayout);
 		frame.setVisible(true);
-		frame.getDefaultCloseOperation();
+		frame.setSize(800, 800);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(panel);
+		panel.setSize(800, 800);
+		
+		for (int i = 0; i < cal.calArr.size(); i++) {
+			JButton btn = new JButton(Integer.toString(cal.calArr.get(i)));
+			
+			btn.setSize(200, 200);
+
+			if (i % 7 == 0) {
+				btn.setBackground(Color.RED);
+			} else if (i % 7 == 6) {
+				btn.setBackground(Color.RED);
+			}
+			panel.add(btn);
+		} 
+	/*	for (int i = 0; i < cal.calArr.size(); i++) {
+			JButton btn = new JButton(Integer.toString(cal.calArr.get(i)));
+			btn.setSize(200, 200);
+			if (i % 7 == 0) {
+				btn.setBackground(Color.RED);
+			} else if (i % 7 == 6) {
+				btn.setBackground(Color.RED);
+			}
+			panel.add(btn);
+		} */
+
 	}
 }
