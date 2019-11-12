@@ -3,63 +3,80 @@ package moneybook;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-class CalendarMethod{
-	private String[] calHeader = {"ÀÏ","¿ù","È­","¼ö","¸ñ","±İ","Åä"};
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+class CalendarMethod {
+	private String[] calHeader = { "ì¼", "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† " };
 	ArrayList<Integer> calArr = new ArrayList<>();
 	Calendar cal = Calendar.getInstance();
 	int year = cal.get(Calendar.YEAR);
 	int month = cal.get(Calendar.MONTH);
 	int day = cal.get(Calendar.DATE);
-	int lastDay = cal.getActualMaximum(Calendar.DATE); // ÇØ´ç ´ŞÀÇ ¸¶Áö¸·³¯Â¥
-	int startDay_yoil = cal.get(Calendar.DAY_OF_WEEK); // ÇØ´ç ÀÏÀÇ ¿äÀÏ ±âº»ÀûÀ¸·Î ÇöÀç ³¯Â¥ÀÇ ¿äÀÏ
-	
-	
-	
+	int lastDay = cal.getActualMaximum(Calendar.DATE); // í•´ë‹¹ ë‹¬ì˜ ë§ˆì§€ë§‰ë‚ ì§œ
+	int startDay_yoil = cal.get(Calendar.DAY_OF_WEEK); // í•´ë‹¹ ì¼ì˜ ìš”ì¼ ê¸°ë³¸ì ìœ¼ë¡œ í˜„ì¬ ë‚ ì§œì˜ ìš”ì¼
+
 	public ArrayList<Integer> getThisMonth() {
-		for(int i =0;i<lastDay;i++) {
-			calArr.add(i+1);
+		cal.set(Calendar.MONTH, 0);
+		cal.set(Calendar.DATE, 1);
+		lastDay = cal.getActualMaximum(Calendar.DATE);
+		for (int i = 0; i < lastDay; i++) {
+			calArr.add(i + 1);
 		}
-				
-		return  calArr;
+
+		return calArr;
 	}
-	
-	public ArrayList<Integer> getlastMonth(){
+
+	public ArrayList<Integer> getlastMonth() {
 		cal.set(Calendar.DATE, 1);
 		startDay_yoil = cal.get(Calendar.DAY_OF_WEEK);
 		lastDay = cal.getActualMaximum(Calendar.DATE);
 		int yoil = startDay_yoil - 1;
-		for(int i =0; i<yoil;i++) {
+		for (int i = 0; i < yoil; i++) {
 			calArr.add(0, lastDay);
 			lastDay--;
 		}
-		
+
 		return calArr;
-		
+
 	}
-	
-	public void conSol(){
-		for(int i = 0; i <calArr.size();i++) {
-			System.out.print(calArr.get(i)+".");
-			
-			if(i % 7 == 6) {
+
+	public void conSol() {
+		for (int i = 0; i < calArr.size(); i++) {
+			System.out.print(calArr.get(i) + ".");
+
+			if (i % 7 == 6) {
 				System.out.println();
 			}
 		}
 	}
-	
-	
-	
-	
+
 }
 
-
-public class CalendarMain extends CalendarMethod{
+public class CalendarMain {
 	public static void main(String[] args) {
 		CalendarMethod cal = new CalendarMethod();
 		cal.getlastMonth();
 		cal.getThisMonth();
 		cal.conSol();
 		
-	
+		JFrame frame = new JFrame();
+		JPanel panel = new JPanel();
+		JLabel label;
+		for(int i = 0;i<cal.getlastMonth().size();i++) {
+			label = new JLabel(cal.calArr);
+			label.setSize(80, 80);
+			panel.add(label);
+		}
+		for(int i =0; i<cal.getThisMonth().size();i++) {
+			label = new JLabel(cal.calArr);
+			label.setSize(80, 80);
+			panel.add(label);
+		}
+		frame.setVisible(true);
+		frame.getDefaultCloseOperation();
 	}
 }
