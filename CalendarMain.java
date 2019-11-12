@@ -79,8 +79,8 @@ public class CalendarMain extends JFrame{
 		JPanel panel = new JPanel();
 	//	JTable table = new JTable(header,row);
 		
-		GridLayout gridLayout = new GridLayout(cal.calArr.size()/7,7);
-		frame.setLayout(gridLayout);
+	//	GridLayout gridLayout = new GridLayout(cal.calArr.size()/7,7);
+	//	frame.setLayout(gridLayout);
 		frame.setVisible(true);
 		frame.setSize(800, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,9 +88,9 @@ public class CalendarMain extends JFrame{
 		panel.setSize(800, 800);
 		
 		for (int i = 0; i < cal.calArr.size(); i++) {
-			JButton btn = new JButton(Integer.toString(cal.calArr.get(i)));
+			JButton btn = new JButton(Integer.toString(cal.calArr.get(i))+" ");
 			
-			btn.setSize(200, 200);
+			btn.setSize(100, 100);
 
 			if (i % 7 == 0) {
 				btn.setBackground(Color.RED);
