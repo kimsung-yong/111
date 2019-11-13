@@ -14,7 +14,8 @@ import javax.swing.JPanel;
 class CalendarMethod {
 	private String[] calHeader = { "일", "월", "화", "수", "목", "금", "토" };
 	ArrayList<Integer> calArr = new ArrayList<>();
-	Calendar cal = Calendar.getInstance();
+	Calendar cal = Calendar.getInstance(); // 전달
+	Calendar cal1 = Calendar.getInstance(); // 이번달
 	int year = cal.get(Calendar.YEAR);
 	int month = cal.get(Calendar.MONTH);
 	int day = cal.get(Calendar.DATE);
@@ -30,10 +31,11 @@ class CalendarMethod {
 	}
 
 	public ArrayList<Integer> getThisMonth() {
-		cal.set(Calendar.MONTH, 0);
-		cal.set(Calendar.DATE, 1);
-		lastDay = cal.getActualMaximum(Calendar.DATE);
-		for (int i = 0; i < lastDay; i++) {
+ //     cal1.set(Calendar.MONTH, 0);
+		cal1.set(Calendar.DATE, 1);
+		System.out.println("이번달"+cal1.get(Calendar.MONTH));
+		lastDay = cal1.getActualMaximum(Calendar.DATE);
+		for (int i = 0; i < lastDay+1; i++) {
 			calArr.add(i + 1);
 		}
 
@@ -42,9 +44,14 @@ class CalendarMethod {
 		
 	public ArrayList<Integer> getlastMonth() {
 		cal.set(Calendar.DATE, 1);
+		
 		startDay_yoil = cal.get(Calendar.DAY_OF_WEEK);
+		System.out.println("스타트데이"+startDay_yoil);
+		cal.add(Calendar.MONTH, -1);
+		System.out.println("라스트데이"+lastDay+"저번달"+cal.get(Calendar.MONTH));
 		lastDay = cal.getActualMaximum(Calendar.DATE);
-		int yoil = startDay_yoil - 1;
+		int yoil = startDay_yoil-1;
+		
 		for (int i = 0; i < yoil; i++) {
 			calArr.add(0, lastDay);
 			lastDay--;
@@ -72,11 +79,12 @@ public class CalendarMain extends JFrame{
 
 	public static void main(String[] args) {
 		CalendarMethod cal = new CalendarMethod();
-		cal.getlastMonth();
 		cal.getThisMonth();
+		cal.getlastMonth();
+		
 		cal.conSol();
 		String header[] = cal.getCalHeader();
-		ArrayList<Integer> row = cal.calArr;
+	//	ArrayList<Integer> row = cal.calArr;
 		JFrame frame = new JFrame();
 		JPanel panel = new JPanel();
 	//	JTable table = new JTable(header,row);
