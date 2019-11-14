@@ -4,23 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class CalendarMethod {
-	private String[] calHeader = { "ì¼", "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† " };
+	private String[] calHeader = { "ÀÏ", "¿ù", "È­", "¼ö", "¸ñ", "±İ", "Åä" };
 	ArrayList<Integer> calArr = new ArrayList<>();
-	Calendar cal = Calendar.getInstance(); // ì „ë‹¬
-	Calendar cal1 = Calendar.getInstance(); // ì´ë²ˆë‹¬
+	Calendar cal = Calendar.getInstance(); // Àü´Ş
+	Calendar cal1 = Calendar.getInstance(); // ÀÌ¹ø´Ş
 	int year = cal.get(Calendar.YEAR);
 	int month = cal.get(Calendar.MONTH);
 	int day = cal.get(Calendar.DATE);
-	int lastDay = cal.getActualMaximum(Calendar.DATE); // í•´ë‹¹ ë‹¬ì˜ ë§ˆì§€ë§‰ë‚ ì§œ
-	int startDay_yoil = cal.get(Calendar.DAY_OF_WEEK); // í•´ë‹¹ ì¼ì˜ ìš”ì¼ ê¸°ë³¸ì ìœ¼ë¡œ í˜„ì¬ ë‚ ì§œì˜ ìš”ì¼
+	int lastDay = cal.getActualMaximum(Calendar.DATE); // ÇØ´ç ´ŞÀÇ ¸¶Áö¸·³¯Â¥
+	int startDay_yoil = cal.get(Calendar.DAY_OF_WEEK); // ÇØ´ç ÀÏÀÇ ¿äÀÏ ±âº»ÀûÀ¸·Î ÇöÀç ³¯Â¥ÀÇ ¿äÀÏ
 
 	public String[] getCalHeader() {
 		return calHeader;
@@ -33,7 +38,7 @@ class CalendarMethod {
 	public ArrayList<Integer> getThisMonth() {
  //     cal1.set(Calendar.MONTH, 0);
 		cal1.set(Calendar.DATE, 1);
-		System.out.println("ì´ë²ˆë‹¬"+cal1.get(Calendar.MONTH));
+		System.out.println("ÀÌ¹ø´Ş"+cal1.get(Calendar.MONTH));
 		lastDay = cal1.getActualMaximum(Calendar.DATE);
 		for (int i = 0; i < lastDay+1; i++) {
 			calArr.add(i + 1);
@@ -46,9 +51,9 @@ class CalendarMethod {
 		cal.set(Calendar.DATE, 1);
 		
 		startDay_yoil = cal.get(Calendar.DAY_OF_WEEK);
-		System.out.println("ìŠ¤íƒ€íŠ¸ë°ì´"+startDay_yoil);
+		System.out.println("½ºÅ¸Æ®µ¥ÀÌ"+startDay_yoil);
 		cal.add(Calendar.MONTH, -1);
-		System.out.println("ë¼ìŠ¤íŠ¸ë°ì´"+lastDay+"ì €ë²ˆë‹¬"+cal.get(Calendar.MONTH));
+		System.out.println("¶ó½ºÆ®µ¥ÀÌ"+lastDay+"Àú¹ø´Ş"+cal.get(Calendar.MONTH));
 		lastDay = cal.getActualMaximum(Calendar.DATE);
 		int yoil = startDay_yoil-1;
 		
@@ -86,18 +91,34 @@ public class CalendarMain extends JFrame{
 		String header[] = cal.getCalHeader();
 	//	ArrayList<Integer> row = cal.calArr;
 		JFrame frame = new JFrame();
-		JPanel panel = new JPanel();
-	//	JTable table = new JTable(header,row);
-		
-	//	GridLayout gridLayout = new GridLayout(cal.calArr.size()/7,7);
-	//	frame.setLayout(gridLayout);
+	//	JPanel panel = new JPanel(new GridLayout(7,7));
+		JPanel panel = new JPanel(); //´Ş·Â
+		JPanel panel1 = new JPanel(); //³â¿ù µé¾î°¥ À­´Ü ÆĞ³Î
+	    JLabel label = new JLabel(cal.year+"³â"+(cal.month+1)+"¿ù");
+	    ImageIcon img = new ImageIcon("C:\\Users\\user\\Desktop\\workspace\\moneybook\\src\\moneybook\\IMG\\ÁÂ»ìÇ¥.png");
+	    ImageIcon img1 = new ImageIcon("C:\\Users\\user\\Desktop\\workspace\\moneybook\\src\\moneybook\\IMG\\¿ì»ìÇ¥.png");
+	    JButton btn2 = new JButton(img);
+	    JButton btn3 = new JButton(img1);
+	    btn2.setPreferredSize(new Dimension(50, 50));
+	    btn3.setPreferredSize(new Dimension(50, 50));
+		label.setFont(new Font("",Font.BOLD,30));
+	    frame.setLayout(new BorderLayout());
+		GridLayout gridLayout = new GridLayout(0,7);
+		panel.setLayout(gridLayout);
 	//	frame.getContentPane().setLayout(new FlowLayout());
-		frame.setVisible(true);
+		
 		frame.setSize(640, 800);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(panel);
-		panel.setSize(800, 800);
+		frame.add(panel,"Center");
+		panel.setSize(640, 600);
 		frame.setLocationRelativeTo(null);
+		frame.add(panel1,"North");
+		panel1.setSize(640, 200);
+		panel1.add(btn2);
+		panel1.add(label);
+		panel1.add(btn3);
+		
+		
 		
 		for(int i = 0; i<header.length;i++) {
 			JButton btn = new JButton(header[i]);
@@ -123,7 +144,7 @@ public class CalendarMain extends JFrame{
 			} else if (i % 7 == 6) {
 				btn1.setForeground(Color.RED);
 			}
-			panel.add(btn1,BorderLayout.WEST);
+			panel.add(btn1);
 		} 
 	/*	for (int i = 0; i < cal.calArr.size(); i++) {
 			JButton btn = new JButton(Integer.toString(cal.calArr.get(i)));
@@ -135,6 +156,9 @@ public class CalendarMain extends JFrame{
 			}
 			panel.add(btn);
 		} */
-
+		
+		System.out.println(cal.calArr.size());
+		frame.setVisible(true);
+		
 	}
 }
